@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/Swarnita/Desktop/SQL course Linkedin learning/learningsql-2875059-main/SQLite/quizdata.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser query" current="2"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1711"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,6:mainpeople"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1">-- General practise
+SELECT * FROM people;
+
+SELECT 'Hello Swar';
+
+SELECT * FROM states;
+
+-- Challenge 1: Retrieve data from the database (Summary of Prizes)
+SELECT first_name,last_name FROM people;
+
+SELECT shirt_or_hat,team,first_name,last_name,quiz_points
+FROM people
+ORDER BY shirt_or_hat,team;
+
+-- Challenge 2: Practice with JOINs (Explore JOINs)
+--1)
+SELECT people.state_code,states.state_name,people.shirt_or_hat,COUNT(people.shirt_or_hat)
+FROM people
+JOIN states ON people.state_code = states.state_abbrev
+WHERE people.shirt_or_hat = 'hat'
+GROUP BY people.state_code,people.shirt_or_hat;
+
+-- 2)
+SELECT people.team,states.division,COUNT(people.team)
+FROM people
+JOIN states ON people.state_code = states.state_abbrev
+GROUP BY states.division,people.team;
+
+-- Challenge 3: Calculate participant metrics (Quiz Metrics)
+--1)
+SELECT state_name,MAX(quiz_points),AVG(quiz_points)
+FROM people
+JOIN states on people.state_code=states.state_abbrev
+GROUP BY state_code;
+
+--2) 
+SELECT state_name,MAX(quiz_points),AVG(quiz_points)
+FROM people
+JOIN states on people.state_code=states.state_abbrev
+GROUP BY state_code
+ORDER BY AVG(quiz_points) DESC;
+
+-- Challenge 4:Practice working with data (Maintain Records)
+-- 1) ADD:
+INSERT INTO people
+(first_name,last_name,city,state_code,shirt_or_hat,quiz_points,team) 
+VALUES 
+('Walter','St.John','Buffalo','NY','hat','93','Baffled Badgers'),
+('Emerald','Chou','Topeka','KS','shirt','92','Angry Ants');
+
+-- 2) CHANGE:
+SELECT * FROM people WHERE first_name='Bonnie' AND last_name='Brooks';
+
+UPDATE people 
+SET shirt_or_hat='shirt'
+WHERE id_number='12';
+
+-- 3) REMOVE:
+SELECT * FROM people WHERE first_name='Lois' AND last_name='Hart';
+
+DELETE FROM people where id_number='590';</sql><current_tab id="0"/></tab_sql></sqlb_project>
